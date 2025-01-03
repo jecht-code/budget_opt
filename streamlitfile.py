@@ -10,11 +10,15 @@ df = pd.read_csv('DataSet_Streamlit.csv')
 
 #Make a drop down that filters said dataframe.
 # Create the dropdown
-options = df['Brand'].unique().tolist()
+# Added "All" so it views all lists in the data frame.
+options = ['All'] + sorted(df['Brand'].unique().tolist())
 selected_category = st.selectbox('Select Brand:', options)
 
-# Filter the DataFrame
-filtered_df = df[df['Brand'] == selected_category]
+#follow AI, Added if statement to add filter to dataframe.
+if selected_category == 'All':
+        filtered_df = df
+else:
+        filtered_df = df[df['Brand'] == selected_category]
 
 # Display the filtered DataFrame
-st.dataframe(filtered_df)
+st.dataframe(filtered_df, hide_index=True)
